@@ -1,0 +1,13 @@
+# Swap files #
+##############
+*.swp
+
+# Logs #
+########
+*.log
+
+###################################
+# Archivos especificos por que si #
+###################################
+hello.php
+php-sdk/*
