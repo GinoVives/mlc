@@ -17,5 +17,6 @@ if ($_SESSION['nickname']):
 else:
 	echo 'Bienvenido. <a href="login.php">Entrar</a>';
 endif;
+echo ' <a href="index.php">Inicio</a>';
 ?>
 
