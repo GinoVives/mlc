@@ -7,7 +7,6 @@ require 'header.php';
 	<li>Publicas</li>
 		<ul>
 			<li><a href="busqueda.php">Busqueda</a></li>
-			<li><a href="infoUsuario.php">Usuarios</a></li>
 		</ul>
 	<li>Privadas</li>
 		<ul>
