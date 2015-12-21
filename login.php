@@ -11,18 +11,22 @@ else:
 	echo '<input id="manual_token" type="text" size="20" value="Please copy token here!"/>';
 	echo '<input id="login" type="button" value="Login"/>';
 endif;
-
-// scripting
-echo '<script type="text/javascript">';
-echo '  jQuery(document).ready(function() {';
-echo '          jQuery("#login").click(function() {';
-echo '                  var form_token = jQuery("#manual_token").val();';
-echo '                  alert("Token is: " + form_token);';
-echo '                  jQuery.post("performLogin.php", {token: form_token}).done(function(){window.location.href = "index.php"});';
-echo '          });';
-echo '  });';
-echo '</script>';
-
+?>
+<!-- scripting --!>
+<script type="text/javascript">
+	jQuery(document).ready(function() {
+		jQuery("#login").click(function() {
+			var form_token = jQuery("#manual_token").val();
+			jQuery.post("performLogin.php", {token: form_token}).done(function(){
+				window.location.href = "index.php"
+			});
+		});
+		jQuery("#manual_token").focusin(function() {
+			jQuery("#manual_token").val("");
+		});
+	});
+</script>
+<?php
 
 require 'footer.php';
 ?>

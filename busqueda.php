@@ -17,11 +17,14 @@ require 'header.php';
 	});
 
 	function performSearch(query_text) {
+		jQuery("body").css({'cursor' : 'wait'});
 		var query = "https://api.mercadolibre.com/sites/MLC/search?q=" + query_text;
 		jQuery.get(query).done(function (data) {
-			printResultado(jQuery("#resultado"), data.results); 
+			printResultado(jQuery("#resultado"), data.results);
 		}).error(function (error_payload) {
 			alert(error_payload);
+		}).always(function() {
+			jQuery("body").css({'cursor' : 'default'});
 		});
 	}
 
