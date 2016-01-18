@@ -12,6 +12,14 @@ function printHTMLfromJSON($key, $value) {
 		}
 		echo '</ul>';
 		echo '</li>';
+	elseif (is_array($value)) :
+		echo '<li>'.$key;
+		echo '<ul>';
+		foreach($value as $arrayItem) {
+			echo '<li>'.$arrayItem.'</li>';
+		}
+		echo '</ul>';
+		echo '</li>';
 	else :
 		echo '<li>'.$key.' => '.$value.'</li>';
 	endif;
