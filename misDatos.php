@@ -21,7 +21,24 @@ function printHTMLfromJSON($key, $value) {
 		echo '</ul>';
 		echo '</li>';
 	else :
-		echo '<li>'.$key.' => '.$value.'</li>';
+		echo '<li>'.$key.' => '.$value.HTMLEditable($key,$value).'</li>';
+	endif;
+}
+
+# Definimos las variables de usuario editables:
+$editables = array (
+	"first_name",
+	"last_name",
+);
+
+function HTMLEditable($key, $value) {
+	global $editables;
+	if (is_null($value)) :
+		return "";
+	elseif (in_array($key, $editables)) :
+		return '<button class="editButton">edit</button>';
+	else :
+		return "";
 	endif;
 }
 
@@ -57,11 +74,18 @@ echo '</ul>';
 ?>
 <script type="text/javascript">
 	jQuery(document).ready(function() {
-		jQuery("#menu").menu();
+		jQuery(".editButton").button({
+			icons : {
+				primary: "ui-icon-pencil"
+			},
+			text: false
 		});
+		jQuery("#menu").menu();
+	});
 </script>
 <style>
 	.ui-menu { width : 525px; }
+	.editButton { font-size : 10px !important; float : right ;}
 </style>
 <?php
 require 'footer.php';
