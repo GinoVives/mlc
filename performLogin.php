@@ -3,11 +3,10 @@ session_start();
 
 if ($_POST['token']):
 	$token = $_POST['token'];
-	echo '<p>Received token is: '.$token;
 	$_SESSION['access_token'] = $token;
-	$_SESSION['user_id'] = substr($token, -8);
+	$_SESSION['user_id'] = substr($token, strrpos($token,"-")-strlen($token)+1);
 	// lets give it a try
-	$url = "https://api.mercadolibre.com/users/".$_SESSION['user_id']; // ."/addresses?access_token=".$token;
+	$url = "https://api.mercadolibre.com/users/".$_SESSION['user_id'];
 	$curl = curl_init();
 	curl_setopt_array($curl, array(
 		CURLOPT_RETURNTRANSFER => 1,
