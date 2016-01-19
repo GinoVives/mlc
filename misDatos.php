@@ -36,7 +36,7 @@ function HTMLEditable($key, $value) {
 	if (is_null($value)) :
 		return "";
 	elseif (in_array($key, $editables)) :
-		return '<button class="editButton">edit</button>';
+		return '<button class="editButton"></button>';
 	else :
 		return "";
 	endif;
@@ -72,8 +72,33 @@ echo '</ul>';
 
 ### Agregamos un poquito de UI
 ?>
+<div id="dialog-form" title="Actualizar Datos">
+	<form>
+		<label for="value">TBD</label>
+		<input type="text" name="value" value="TBV">
+		<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+	</form>
+</div>
 <script type="text/javascript">
 	jQuery(document).ready(function() {
+		var dialog, form;
+		dialog = jQuery("#dialog-form").dialog({
+			autoOpen: false,
+			height: 300,
+			width: 350,
+			modal: true,
+			buttons: {
+				"Guardar": guardarCambio,
+				"Cancelar": function() { dialog.dialog("close");}
+			},
+			close: function() { form[0].reset(); }
+		});
+
+		form = dialog.find("form").on("submit", function(event) {
+			event.preventDefault();
+			guardarCambio();
+		});
+
 		jQuery(".editButton").button({
 			icons : {
 				primary: "ui-icon-pencil"
@@ -81,7 +106,25 @@ echo '</ul>';
 			text: false
 		});
 		jQuery("#menu").menu();
+
+
+		jQuery("button.editButton").click(function() {
+			var parentElement = jQuery(this).parent();
+			var elementText = parentElement.text();
+			var pos = elementText.indexOf("=");
+			var key = elementText.substring(0,pos-1);
+			var value = elementText.substring(pos+3);
+			form.children("label").text(key);
+			form.children("input[name=value]").val(value);
+			dialog.dialog("open");
+		});
+
 	});
+
+	function guardarCambio() {
+		alert('Guardando...');
+		dialog.dialog("close");
+		}
 </script>
 <style>
 	.ui-menu { width : 525px; }
