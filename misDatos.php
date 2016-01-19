@@ -28,7 +28,7 @@ function printHTMLfromJSON($key, $value) {
 # Definimos las variables de usuario editables:
 $editables = array (
 	"first_name",
-	"last_name",
+	"last_name"
 );
 
 function HTMLEditable($key, $value) {
@@ -122,8 +122,22 @@ echo '</ul>';
 	});
 
 	function guardarCambio() {
-		alert('Guardando...');
+		var dialog = jQuery("#dialog-form");
+		var form = dialog.children("form");
+		var key = form.children("label:first").text();
+		var value = form.children("input[name=value]:first").val();
+		jQuery("body").css({'cursor' : 'wait'});
+		var url = "https://api.mercadolibre.com/users/<?=$_SESSION['user_id']?>?access_token=<?=$_SESSION['access_token']?>";
+		var payload = '{ "' + key + '" : "' + value + '" }';
+		jQuery.ajax(url, 
+		{
+			type: 'PUT',
+			data: payload,
+		})
+		.fail(function(error_data) { alert("Hubo un error al actualizar el valor: " + var_dump(error_data)); })
+		.always(function () { jQuery("body").css({'cursor' : 'default'}); });
 		dialog.dialog("close");
+		window.location.href = "misDatos.php";
 		}
 </script>
 <style>
